@@ -345,13 +345,13 @@ The web page exposed the responding instance ID and Availability Zone.
 
 ### Response from `us-east-1a`
 
-![Application response from us-east-1a](screenshots/01-application-response-us-east-1a.png)
+![Application response from us-east-1a](screenshots/02-application-load-balanced-instance-az1.png)
 
 > **Figure 1 — Multi-AZ application response:** The ALB served the application from an EC2 instance in `us-east-1a`.
 
 ### Response from `us-east-1b`
 
-![Application response from us-east-1b](screenshots/02-application-response-us-east-1b.png)
+![Application response from us-east-1b](screenshots/03-application-load-balanced-instance-az2.png)
 
 > **Figure 2 — Multi-AZ application response:** Refreshing the same ALB endpoint returned a response from an instance in `us-east-1b`.
 
@@ -367,7 +367,7 @@ Together, these responses proved that requests were reaching separate applicatio
 
 The final Target Group state showed two healthy targets:
 
-![Target Group healthy targets](screenshots/05-target-group-two-healthy-targets.png)
+![Target Group healthy targets](screenshots/05-target-group-two-healthy-instances.png)
 
 > **Figure 4 — Target health:** Both application instances were healthy after recovery, with one target in each Availability Zone.
 
@@ -394,7 +394,7 @@ Additional settings included:
 - availability-oriented replacement behavior;
 - CloudWatch group metrics.
 
-![Auto Scaling Group capacity](screenshots/06-auto-scaling-group-capacity.png)
+![Auto Scaling Group configuration](screenshots/06-auto-scaling-group-configuration.png)
 
 > **Figure 5 — Auto Scaling capacity:** The ASG maintained two baseline instances and allowed scale-out to four.
 
@@ -425,7 +425,7 @@ us-east-1b → i-0c6cc272ab36dd00b
 
 Both passed all EC2 status checks.
 
-![EC2 instances before failure](screenshots/03-ec2-multi-az-before-failure.png)
+![EC2 instances before failure](screenshots/01-ec2-instances-before-failure.png)
 
 > **Figure 6 — Before failure:** Two healthy EC2 application instances were running across separate Availability Zones.
 
@@ -459,7 +459,7 @@ The EC2 console then showed the terminated original instance together with the s
 
 After the replacement became healthy, refreshing the ALB again produced a response from `us-east-1b`:
 
-![Application after recovery](screenshots/10-application-after-recovery-us-east-1b.png)
+![Application after Auto Scaling recovery](screenshots/09-application-after-auto-scaling-recovery.png)
 
 > **Figure 9 — Application recovered across both AZs:** The new replacement instance in `us-east-1b` successfully served traffic through the same ALB.
 
@@ -505,7 +505,7 @@ CPUUtilization < 35
 
 The high alarm was `OK`, while the low alarm was `In alarm`.
 
-![CloudWatch target-tracking alarms](screenshots/08-cloudwatch-target-tracking-alarms.png)
+![CloudWatch Auto Scaling alarms](screenshots/08-cloudwatch-auto-scaling-alarms.png)
 
 > **Figure 10 — Target-tracking alarms:** The low-utilization alarm being in ALARM state represented lightly loaded instances and the scale-in side of the target-tracking policy, not an application outage.
 
@@ -534,7 +534,7 @@ The database layer used:
 
 The standby existed for availability/failover and was not used as an application read replica.
 
-![RDS Multi-AZ configuration](screenshots/12-rds-mysql-multi-az-configuration.png)
+![RDS Multi-AZ configuration](screenshots/11-rds-mysql-multi-az-configuration.png)
 
 > **Figure 11 — Database high availability:** RDS was configured as a Multi-AZ MySQL deployment with the secondary database in a separate Availability Zone.
 
@@ -547,7 +547,7 @@ The database was placed in the private DB subnet group:
 
 Public access was disabled.
 
-![RDS private connectivity](screenshots/11-rds-private-connectivity.png)
+![RDS private connectivity](screenshots/10-rds-mysql-database.png)
 
 > **Figure 12 — Private database connectivity:** The RDS instance used private VPC connectivity rather than direct public internet access.
 
@@ -638,7 +638,7 @@ And read back:
 SELECT * FROM connectivity_test;
 ```
 
-![EC2 to RDS MySQL read/write test](screenshots/13-ec2-rds-mysql-read-write-test.png)
+![EC2 to RDS MySQL read/write test](screenshots/13-rds-mysql-connectivity-test-result.png)
 
 > **Figure 13 — Database validation:** The final SELECT returned the inserted row, proving EC2 → private RDS networking, authentication, database write, and database read.
 
