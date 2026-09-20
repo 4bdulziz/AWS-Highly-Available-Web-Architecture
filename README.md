@@ -451,7 +451,7 @@ in `us-east-1b`.
 
 The EC2 console then showed the terminated original instance together with the surviving instance and the new replacement:
 
-![EC2 failure and replacement](screenshots/09-ec2-failure-and-replacement.png)
+![EC2 failure and replacement](screenshots/08b-ec2-failure-and-replacement.png)
 
 > **Figure 8 — Recovery in progress:** The original `us-east-1b` instance was terminated while Auto Scaling created a replacement and preserved the surviving `us-east-1a` instance.
 
